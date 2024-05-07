@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\HttpFoundation\Response;
+
 
 
 class UserController extends AbstractController
@@ -22,13 +24,13 @@ class UserController extends AbstractController
     }
 
     #[Route('/users', name: 'user_list')]
-    public function listAction()
+    public function listAction(): Response
     {
         return $this->render('user/list.html.twig', ['users' => $this->entityManager->getRepository(User::class)->findAll()]);
     }
 
     #[Route('/users/create', name: 'user_create')]
-    public function createAction(Request $request, UserPasswordHasherInterface $userPasswordHasher)
+    public function createAction(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -57,7 +59,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/users/{id}/edit', name: 'user_edit')]
-    public function editAction(User $user, Request $request, UserPasswordHasherInterface $userPasswordHasher)
+    public function editAction(User $user, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
 
