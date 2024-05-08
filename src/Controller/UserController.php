@@ -1,63 +1,84 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace App\Controller;
 
-use AppBundle\Entity\User;
-use AppBundle\Form\UserType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Entity\User;
+use App\Form\UserType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\HttpFoundation\Response;
 
-class UserController extends Controller
+
+
+class UserController extends AbstractController
 {
-    /**
-     * @Route("/users", name="user_list")
-     */
-    public function listAction()
+
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
+        $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/users/create", name="user_create")
-     */
-    public function createAction(Request $request)
+    #[Route('/users', name: 'user_list')]
+    public function listAction(): Response
+    {
+        return $this->render('user/list.html.twig', ['users' => $this->entityManager->getRepository(User::class)->findAll()]);
+    }
+
+    #[Route('/users/create', name: 'user_create')]
+    public function createAction(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
 
-            $em->persist($user);
-            $em->flush();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
             return $this->redirectToRoute('user_list');
         }
 
+        // todo : etudier les potentiels erreurs du formulaire (mot de passe répété qui ne correspond pas, etc...)
+
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @Route("/users/{id}/edit", name="user_edit")
-     */
-    public function editAction(User $user, Request $request)
+    #[Route('/users/{id}/edit', name: 'user_edit')]
+    public function editAction(User $user, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
+        if ($form->isSubmitted() &&  $form->isValid()) {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
+
+            // $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
+            // $user->setPassword($password);
+
+            // $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 
