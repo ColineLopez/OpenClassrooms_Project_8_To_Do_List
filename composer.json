@@ -71,7 +71,12 @@
         }
     },
     "require-dev": {
+        "friends-of-behat/symfony-extension": "^2.5",
+        "phpunit/phpunit": "^9.5",
+        "symfony/browser-kit": "6.4.*",
+        "symfony/css-selector": "6.4.*",
         "symfony/maker-bundle": "^1.59",
+        "symfony/phpunit-bridge": "^7.0",
         "symfony/web-profiler-bundle": "6.4.*"
     }
 }
