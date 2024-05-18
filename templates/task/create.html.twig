@@ -1,13 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row">
-        {{ form_start(form, {'action' : path('task_create')}) }}
-            {{ form_widget(form) }}
+    {% if not app.user %}
+            <div class="alert alert-warning" role="alert">
+                Vous devez être connecté pour pouvoir créer une tâche. <a href="{{ path('login') }}" class="btn btn-warning pull-right">Se connecter</a>
+            </div>
+    {% endif %}
+    {% if app.user %}
+        <div class="row">
+            {{ form_start(form, {'action' : path('task_create')}) }}
+                {{ form_widget(form) }}
 
-            <button type="submit" class="btn btn-success pull-right">Ajouter</button>
-        {{ form_end(form) }}
+                <button type="submit" class="btn btn-success pull-right">Ajouter</button>
+            {{ form_end(form) }}
 
-        <a href="{{ path('task_list') }}" class="btn btn-primary">Retour à la liste des tâches</a>
-    </div>
+            <a href="{{ path('task_list') }}" class="btn btn-primary">Retour à la liste des tâches</a>
+        </div>
+    {% endif %}    
 {% endblock %}
