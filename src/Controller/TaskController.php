@@ -8,7 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class TaskController extends AbstractController
 {
@@ -83,8 +85,16 @@ class TaskController extends AbstractController
     }
 
     #[Route('/tasks/{id}/delete', name: 'task_delete')]
+    // #[IsGranted('delete', 'task')]
     public function deleteTaskAction(Task $task): Response
     {
+
+        // $user = $this->getUser();
+        // if ($task->getUser() !== $user) {
+        //     throw new AccessDeniedException('Vous n\'êtes pas autorisé à supprimer cette tâche.');
+        // }
+
+
         $this->entityManager->remove($task);
         $this->entityManager->flush();
 
