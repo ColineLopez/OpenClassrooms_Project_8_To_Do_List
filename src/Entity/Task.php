@@ -106,4 +106,9 @@ class Task
 
         return $this;
     }
+
+    public function getOwner(): ?User
+    {
+        return $this->user;
+    }
 }
