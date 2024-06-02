@@ -104,7 +104,7 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('task_list');
     }
 
-    #[Route('/completed', name: '_list_completed')]
+    #[Route('/completed', name: 'list_completed')]
     public function getValidatedTask(): Response
     {
         return $this->render('task/list.html.twig', ['tasks' => $this->entityManager->getRepository(Task::class)->findBy(['isDone'=>true])]);
