@@ -89,18 +89,18 @@ class TaskControllerTest extends WebTestCase
         $this->assertEquals(1, $crawler->filter('div.alert-success')->count());
     }
 
-    // public function testDeleteTaskAction()
-    // {
-    //     $this->client->request('GET', '/tasks/7/delete');
+    public function testDeleteTaskAction()
+    {
+        $this->client->request('GET', '/tasks/7/delete');
 
-    //     $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
+        $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
-    //     $this->assertResponseRedirects('/tasks/');
-    //     $this->client->followRedirect();
+        $this->assertResponseRedirects('/tasks/');
+        $this->client->followRedirect();
 
-    //     $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-    //     $this->assertSelectorTextContains('div.alert-success', 'La tâche a bien été supprimée.');
-    // }
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $this->assertSelectorTextContains('div.alert-success', 'La tâche a bien été supprimée.');
+    }
 
     public function testGetValidatedTask()
     {
