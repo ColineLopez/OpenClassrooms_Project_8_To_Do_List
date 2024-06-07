@@ -12,6 +12,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[Route('/users', name: 'user_')]
+#[IsGranted('ROLE_ADMIN')]
 class UserController extends AbstractController
 {
 
@@ -22,15 +24,13 @@ class UserController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/users', name: 'user_list')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/', name: 'list')]
     public function listAction(): Response
     {
         return $this->render('user/list.html.twig', ['users' => $this->entityManager->getRepository(User::class)->findAll()]);
     }
 
-    #[Route('/users/create', name: 'user_create')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/create', name: 'create')]
     public function createAction(Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $user = new User();
@@ -59,8 +59,7 @@ class UserController extends AbstractController
         return $this->render('user/create.html.twig', ['form' => $form->createView()]);
     }
 
-    #[Route('/users/{id}/edit', name: 'user_edit')]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/{id}/edit', name: 'edit')]
     public function editAction(User $user, Request $request, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         $form = $this->createForm(UserType::class, $user);
@@ -82,7 +81,7 @@ class UserController extends AbstractController
 
             // $this->getDoctrine()->getManager()->flush();
 
-            $this->addFlash('success', "L'utilisateur a bien été modifié");
+            $this->addFlash('success', "L'utilisateur a bien été modifié.");
 
             return $this->redirectToRoute('user_list');
         }

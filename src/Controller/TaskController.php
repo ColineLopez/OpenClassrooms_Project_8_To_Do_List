@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+#[Route('/tasks', name: 'task_')]
 class TaskController extends AbstractController
 {
 
@@ -22,13 +23,13 @@ class TaskController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    #[Route('/tasks', name: 'task_list')]
+    #[Route('/', name: 'list')]
     public function listAction(): Response
     {
         return $this->render('task/list.html.twig', ['tasks' => $this->entityManager->getRepository(Task::class)->findAll()]);
     }
 
-    #[Route('/tasks/create', name: 'task_create')]
+    #[Route('/create', name: 'create')]
     public function createAction(Request $request): Response
     {
         $task = new Task();
@@ -52,7 +53,7 @@ class TaskController extends AbstractController
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
     }
 
-    #[Route('/tasks/{id}/edit', name: 'task_edit')]
+    #[Route('/{id}/edit', name: 'edit')]
     public function editAction(Task $task, Request $request): Response
     {
         $form = $this->createForm(TaskType::class, $task);
@@ -73,7 +74,7 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/tasks/{id}/toggle', name: 'task_toggle')]
+    #[Route('/{id}/toggle', name: 'toggle')]
     public function toggleTaskAction(Task $task): Response
     {
         $task->toggle(!$task->isDone());
@@ -84,7 +85,7 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('task_list');
     }
 
-    #[Route('/tasks/{id}/delete', name: 'task_delete')]
+    #[Route('/{id}/delete', name: 'delete')]
     // #[IsGranted('delete', 'task')]
     public function deleteTaskAction(Task $task): Response
     {
@@ -103,7 +104,7 @@ class TaskController extends AbstractController
         return $this->redirectToRoute('task_list');
     }
 
-    #[Route('tasks/completed', name: 'task_list_completed')]
+    #[Route('/completed', name: 'list_completed')]
     public function getValidatedTask(): Response
     {
         return $this->render('task/list.html.twig', ['tasks' => $this->entityManager->getRepository(Task::class)->findBy(['isDone'=>true])]);
