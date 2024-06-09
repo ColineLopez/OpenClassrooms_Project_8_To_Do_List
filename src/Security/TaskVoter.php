@@ -12,9 +12,9 @@ use Symfony\Bundle\SecurityBundle\Security;
 class TaskVoter extends Voter
 {
     // these strings are just invented: you can use anything
-    const VIEW = 'view';
-    const EDIT = 'edit';
-    const DELETE = 'delete';
+    public const VIEW = 'view';
+    public const EDIT = 'edit';
+    public const DELETE = 'delete';
 
     public function __construct(Security $security) {
 
