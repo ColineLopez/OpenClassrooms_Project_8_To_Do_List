@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Security;
 
@@ -7,7 +8,6 @@ use App\Entity\Task;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-use Symfony\Bundle\SecurityBundle\Security;
 
 class TaskVoter extends Voter
 {
@@ -15,10 +15,6 @@ class TaskVoter extends Voter
     public const VIEW = 'view';
     public const EDIT = 'edit';
     public const DELETE = 'delete';
-
-    public function __construct(Security $security) {
-
-    }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
@@ -69,17 +65,17 @@ class TaskVoter extends Voter
 
     private function canEdit(Task $task, User $user): bool
     {
-        // this assumes that the Task object has a `getOwner()` method
-        return $user === $task->getOwner();
+        // this assumes that the Task object has a `getUser()` method
+        return $user === $task->getUser();
     }
 
     private function canDelete(Task $task, User $user): bool
     {
-        if ($user === $task->getOwner()) {
+        if ($user === $task->getUser()) {
             return true;
         }
 
-        if ($task->getOwner() === "anonymous" && in_array("ROLE_ADMIN", $user->getRoles())) {
+        if ($task->getUser() === 'anonymous' && in_array('ROLE_ADMIN', $user->getRoles())) {
             return true;
         }
 

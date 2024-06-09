@@ -12,6 +12,17 @@
                 <button type="submit" class="btn btn-success pull-right">Ajouter</button>
             {{ form_end(form) }}
         </div>
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% else %}
         <h1>Accès Refusé</h1>
         <p>Vous n'avez pas la permission d'accéder à cette page.</p>

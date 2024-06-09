@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\TaskRepository;
@@ -11,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Task
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue("IDENTITY")]
+    #[ORM\GeneratedValue('IDENTITY')]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -31,22 +33,11 @@ class Task
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-
-    public function setId(int $id): static
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-
     public function __construct()
     {
         $this->createdAt = new DateTime();
         $this->isDone = false;
     }
-
-    
 
     public function getId(): ?int
     {
@@ -118,8 +109,4 @@ class Task
         return $this;
     }
 
-    public function getOwner(): ?User
-    {
-        return $this->user;
-    }
 }

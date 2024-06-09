@@ -78,13 +78,13 @@ class TaskTest extends TestCase
         $this->assertSame($user, $task->getUser());
     }
 
-    public function testGetOwner()
+    public function testGetUser()
     {
         $task = new Task();
         $user = new User();
 
         $task->setUser($user);
-        $this->assertSame($user, $task->getOwner());
+        $this->assertSame($user, $task->getUser());
     }
 
 }
