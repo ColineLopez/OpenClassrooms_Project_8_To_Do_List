@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue("IDENTITY")]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -36,6 +36,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 25)]
     private ?string $username = null;
 
+
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     /**
      * @var Collection<int, Task>
      */
@@ -47,6 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->task = new ArrayCollection();
     }
 
+    
         public function getId(): ?int
     {
         return $this->id;

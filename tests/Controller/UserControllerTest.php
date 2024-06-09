@@ -28,14 +28,11 @@ class UserControllerTest extends WebTestCase
 		$crawler = $this->client->request('GET', '/users/create');
 		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
-
-		//  CHECK LE CONTENU TEXTE DU BOUTON + LES CHAMPS & NOMS DES CHAMPS DU FORMULAIRE
 		$form = $crawler->selectButton('Ajouter')->form([
 			'user[username]' => 'Username test',
 			'user[password][first]' => 'testPassword',
 			'user[password][second]' => 'testPassword',
 			'user[email]' => 'user_email@test.com',
-			// 'user[roles][0]'->tick()
 		]);
 
 		$this->client->submit($form);
@@ -51,7 +48,7 @@ class UserControllerTest extends WebTestCase
 
 	public function testEditAction(): void 
 	{
-		$crawler = $this->client->request('GET', '/users/9/edit');
+		$crawler = $this->client->request('GET', '/users/29/edit');
 		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
 		$form = $crawler->selectButton('Modifier')->form([
@@ -59,7 +56,6 @@ class UserControllerTest extends WebTestCase
 			'user[password][first]' => 'testEditPassword',
 			'user[password][second]' => 'testEditPassword',
 			'user[email]' => 'user_email_edit@test.com',
-			// 'user[roles][0]'->tick()
 		]);
 
 		$this->client->submit($form);
@@ -71,7 +67,6 @@ class UserControllerTest extends WebTestCase
 		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 		$this->assertSelectorTextContains('div.alert-success', "Superbe ! L'utilisateur a bien été modifié.");
 
-		// $this->assertEquals(1, $crawler->filter('div.alert-success')->count());
 	}
 
 }

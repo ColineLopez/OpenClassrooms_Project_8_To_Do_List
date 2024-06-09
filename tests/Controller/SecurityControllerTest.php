@@ -27,10 +27,4 @@ class SecurityControllerTest extends WebTestCase
         $this->client->submit($form, ['_username' => 'test@example.com', '_password' => 'password']);
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
     }
-
-    // public function testLogoutCheck(){
-    // 	$this->loginUser();
-    // 	$crawler = $this->client->request('GET', '/logout');
-    // 	$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-    // }
 }

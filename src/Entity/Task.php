@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Task
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue("IDENTITY")]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -31,11 +31,22 @@ class Task
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+
     public function __construct()
     {
         $this->createdAt = new DateTime();
         $this->isDone = false;
     }
+
+    
 
     public function getId(): ?int
     {

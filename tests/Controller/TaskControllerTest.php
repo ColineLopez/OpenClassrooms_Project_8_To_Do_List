@@ -16,15 +16,7 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->client->request('GET', '/login');
         $form = $crawler->selectButton('Se connecter')->form();
         $this->client->submit($form, ['_username' => 'test@example.com', '_password' => 'password']);
-
     }
-
-    // public function testLogin(): void
-    // {
-        
-    //     $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
-
-    // }
 
     public function testListAction(): void
     {
@@ -45,7 +37,6 @@ class TaskControllerTest extends WebTestCase
         $this->client->submit($form);
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
-
         $this->assertResponseRedirects('/tasks/');
         $this->client->followRedirect();
 
@@ -56,7 +47,7 @@ class TaskControllerTest extends WebTestCase
 
     public function testEditAction()
     {
-        $crawler = $this->client->request('GET', '/tasks/7/edit');
+        $crawler = $this->client->request('GET', '/tasks/105/edit');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
         $form = $crawler->selectButton('Modifier')->form([
@@ -78,7 +69,7 @@ class TaskControllerTest extends WebTestCase
 
     public function testToggleTaskAction()
     {
-        $this->client->request('GET', '/tasks/7/toggle');
+        $this->client->request('GET', '/tasks/105/toggle');
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
         $this->assertResponseRedirects('/tasks/');
@@ -91,7 +82,7 @@ class TaskControllerTest extends WebTestCase
 
     public function testDeleteTaskAction()
     {
-        $this->client->request('GET', '/tasks/7/delete');
+        $this->client->request('GET', '/tasks/105/delete');
 
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
