@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Task
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue('IDENTITY')]
+    #[ORM\GeneratedValue()]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -32,6 +32,9 @@ class Task
     #[ORM\ManyToOne(inversedBy: 'task')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $deadline = null;
 
     public function __construct()
     {
@@ -105,6 +108,18 @@ class Task
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDeadline(): ?\DateTimeInterface
+    {
+        return $this->deadline;
+    }
+
+    public function setDeadline(?\DateTimeInterface $deadline): static
+    {
+        $this->deadline = $deadline;
 
         return $this;
     }

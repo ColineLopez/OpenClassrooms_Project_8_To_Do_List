@@ -48,7 +48,7 @@ class UserControllerTest extends WebTestCase
 
 	public function testEditAction(): void 
 	{
-		$crawler = $this->client->request('GET', '/users/29/edit');
+		$crawler = $this->client->request('GET', '/users/4/edit');
 		$this->assertEquals(200, $this->client->getResponse()->getStatusCode());
 
 		$form = $crawler->selectButton('Modifier')->form([

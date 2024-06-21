@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue('IDENTITY')]
+    #[ORM\GeneratedValue()]
     #[ORM\Column]
     private ?int $id = null;
 

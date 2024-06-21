@@ -87,4 +87,13 @@ class TaskTest extends TestCase
         $this->assertSame($user, $task->getUser());
     }
 
+    public function testDeadline()
+    {
+        $task = new Task();
+        $this->assertNull($task->getDeadline());
+
+        $date = new DateTime();
+        $task->setDeadline($date);
+        $this->assertSame($date, $task->getDeadline());
+    }
 }
