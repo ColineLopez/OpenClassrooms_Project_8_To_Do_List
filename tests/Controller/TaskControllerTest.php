@@ -101,9 +101,9 @@ class TaskControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
     }
 
-    public function listExpiredTask(): void
+    public function testListExpiredTask(): void
     {
-        $this->client->request('GET', "/tasks/");
+        $this->client->request('GET', "/tasks/expired");
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 }
