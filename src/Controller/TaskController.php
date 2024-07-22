@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,9 @@ class TaskController extends AbstractController
     #[Route('/', name: 'list')]
     public function listAction(): Response
     {
+        // $now = new DateTime();
+
+        // return $this->render('task/list.html.twig', ['tasks' => $this->entityManager->getRepository(Task::class)->findActiveTasks($now)]);
         return $this->render('task/list.html.twig', ['tasks' => $this->entityManager->getRepository(Task::class)->findAll()]);
     }
 
@@ -86,16 +90,8 @@ class TaskController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'delete')]
-    // #[IsGranted('delete', 'task')]
     public function deleteTaskAction(Task $task): Response
     {
-
-        // $user = $this->getUser();
-        // if ($task->getUser() !== $user) {
-        //     throw new AccessDeniedException('Vous n\'êtes pas autorisé à supprimer cette tâche.');
-        // }
-
-
         $this->entityManager->remove($task);
         $this->entityManager->flush();
 
@@ -108,5 +104,13 @@ class TaskController extends AbstractController
     public function getValidatedTask(): Response
     {
         return $this->render('task/list.html.twig', ['tasks' => $this->entityManager->getRepository(Task::class)->findBy(['isDone'=>true])]);
+    }
+
+    #[Route('/expired', name: 'list_expired')]
+    public function listExpiredTask(): Response
+    {
+        $now = new DateTime();
+
+        return $this->render('task/list.html.twig', ['tasks' => $this->entityManager->getRepository(Task::class)->findExpiredTasks($now)]);
     }
 }

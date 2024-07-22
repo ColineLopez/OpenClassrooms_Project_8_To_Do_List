@@ -21,6 +21,7 @@ class TaskControllerTest extends WebTestCase
     public function testListAction(): void
     {
         $this->client->request('GET', "/tasks/");
+        // dd($this->client->getResponse());
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 
@@ -47,7 +48,7 @@ class TaskControllerTest extends WebTestCase
 
     public function testEditAction()
     {
-        $crawler = $this->client->request('GET', '/tasks/105/edit');
+        $crawler = $this->client->request('GET', '/tasks/7/edit');
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
 
         $form = $crawler->selectButton('Modifier')->form([
@@ -69,7 +70,7 @@ class TaskControllerTest extends WebTestCase
 
     public function testToggleTaskAction()
     {
-        $this->client->request('GET', '/tasks/105/toggle');
+        $this->client->request('GET', '/tasks/7/toggle');
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
         $this->assertResponseRedirects('/tasks/');
@@ -82,7 +83,7 @@ class TaskControllerTest extends WebTestCase
 
     public function testDeleteTaskAction()
     {
-        $this->client->request('GET', '/tasks/105/delete');
+        $this->client->request('GET', '/tasks/7/delete');
 
         $this->assertEquals(302, $this->client->getResponse()->getStatusCode());
 
@@ -98,5 +99,11 @@ class TaskControllerTest extends WebTestCase
         $this->client->request('GET', '/tasks/completed');
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
+    }
+
+    public function listExpiredTask(): void
+    {
+        $this->client->request('GET', "/tasks/");
+        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
     }
 }

@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Entity\Task;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,8 +21,10 @@ class TaskType extends AbstractType
             // ])
             ->add('title')
             ->add('content', TextareaType::class)
-            // ->add('isDone')
-        ;
+            ->add('deadline', DateTimeType::class, [
+                'widget' => 'single_text',
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
