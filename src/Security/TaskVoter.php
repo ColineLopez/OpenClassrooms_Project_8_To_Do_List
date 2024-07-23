@@ -59,8 +59,6 @@ class TaskVoter extends Voter
             return true;
         }
 
-        // the Task object could have, for example, a method `isPrivate()`
-        // return !$task->isPrivate();
     }
 
     private function canEdit(Task $task, User $user): bool

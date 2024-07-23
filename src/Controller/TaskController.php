@@ -27,10 +27,9 @@ class TaskController extends AbstractController
     #[Route('/', name: 'list')]
     public function listAction(): Response
     {
-        // $now = new DateTime();
+        $now = new DateTime();
 
-        // return $this->render('task/list.html.twig', ['tasks' => $this->entityManager->getRepository(Task::class)->findActiveTasks($now)]);
-        return $this->render('task/list.html.twig', ['tasks' => $this->entityManager->getRepository(Task::class)->findAll()]);
+        return $this->render('task/list.html.twig', ['tasks' => $this->entityManager->getRepository(Task::class)->findActiveTasks($now)]);
     }
 
     #[Route('/create', name: 'create')]

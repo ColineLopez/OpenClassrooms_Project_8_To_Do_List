@@ -18,7 +18,7 @@ class TaskRepository extends ServiceEntityRepository
         parent::__construct($registry, Task::class);
     }
 
-    public function findActiveTasks(\DateTime $now)
+    public function findActiveTasks(\DateTime $now): array
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.deadline IS NULL OR t.deadline >= :now')
@@ -27,7 +27,7 @@ class TaskRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findExpiredTasks(\DateTime $now)
+    public function findExpiredTasks(\DateTime $now): array
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.deadline < :now')

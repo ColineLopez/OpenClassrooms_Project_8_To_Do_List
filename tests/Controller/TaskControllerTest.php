@@ -105,5 +105,6 @@ class TaskControllerTest extends WebTestCase
     {
         $this->client->request('GET', "/tasks/expired");
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+
     }
 }
