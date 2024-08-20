@@ -20,19 +20,25 @@ Only admins can create, modify and delete users. The appliation provides a user-
    
 `git clone https://github.com/ColineLopez/OpenClassrooms_Project_8_To_Do_List.git`
 
-`cd todolist`
+2. Install Dependencies
 
 `composer install`
 
-2. Configure the database
+3. Set up your environment variables configuring it according to your environment.
+   
+4. Configure the database
 
 `php bin/console doctrine:database:create`
 
 `php bin/console doctrine:migrations:migrate`
 
-3. Load fixtures
+5. Load fixtures
 
 `php bin/console doctrine:fixtures:load`
+
+6. Start the Symfony server
+
+`symfony server:start`
 
 ## 🧪 Tests
 
@@ -42,7 +48,7 @@ Unit and functional tests were implemented to ensure the application's proper fu
 
 ## 🖼️ App Overview
 
-## 🛠️ Workspace environment
+## 🛠️ Workspace Environment
 
 ![PHP](https://img.shields.io/badge/PHP-8.3.1-blue)
 
