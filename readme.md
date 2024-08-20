@@ -16,7 +16,7 @@ Only admins can create, modify and delete users. The appliation provides a user-
 
 ## 🛠️ Installing the project
 
-1. Clone the project
+1. Clone the repository
    
 `git clone https://github.com/ColineLopez/OpenClassrooms_Project_8_To_Do_List.git`
 
