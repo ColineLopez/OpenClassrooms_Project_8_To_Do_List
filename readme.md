@@ -18,14 +18,14 @@ Only admins can create, modify and delete users. The appliation provides a user-
 
 1. Clone the project
    
-`git clone https://github.com/ColineLopez/todolist.git
-cd todolist
-composer install`
+`git clone https://github.com/ColineLopez/OpenClassrooms_Project_8_To_Do_List.git`
+`cd todolist`
+`composer install`
 
 2. Configure the database
 
-`php bin/console doctrine:database:create
-php bin/console doctrine:migrations:migrate`
+`php bin/console doctrine:database:create`
+`php bin/console doctrine:migrations:migrate`
 
 3. Load fixtures
 
@@ -41,7 +41,7 @@ Unit and functional tests were implemented to ensure the application's proper fu
 
 ## 🛠️ Workspace environment
 
-`PHP version : 8.3.1
-MySQL version : 8.0.31
-Symfony 6.4`
+`PHP version : 8.3.1`
+`MySQL version : 8.0.31`
+`Symfony 6.4`
 
