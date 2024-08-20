@@ -45,6 +45,8 @@ Unit and functional tests were implemented to ensure the application's proper fu
 ## 🛠️ Workspace environment
 
 ![PHP](https://img.shields.io/badge/PHP-8.3.1-blue)
-![MySQL](https://img.shields.io/badge/MySQL-8.0.31-blue)
+
+![MySQL](https://img.shields.io/badge/MySQL-8.0.31-orange)
+
 ![Symfony](https://img.shields.io/badge/Symfony-6.4-green)
 
