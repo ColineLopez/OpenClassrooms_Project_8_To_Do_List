@@ -1,5 +1,4 @@
-# ToDoList - OpenClassrooms' Project #8
-
+# OpenClassrooms' Project #8 - To Do List
 
 ## Context 
 
