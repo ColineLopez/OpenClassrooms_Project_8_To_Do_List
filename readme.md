@@ -20,6 +20,8 @@ Only admins can create, modify and delete users. The appliation provides a user-
    
 `git clone https://github.com/ColineLopez/OpenClassrooms_Project_8_To_Do_List.git`
 
+`cd OpenClassrooms_Project_8_To_Do_List`
+
 2. Install Dependencies
 
 `composer install`
